@@ -14,6 +14,7 @@ from json import load
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+
 import django_heroku
 
 load_dotenv() #loading the environmental variables
@@ -35,6 +36,7 @@ DEBUG = os.getenv('DEBUG_VALUE')
 
 
 ALLOWED_HOSTS = []
+#https://food--delivery.herokuapp.com/
 
 
 # Application definition
