@@ -35,8 +35,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG_VALUE')
 
 
-ALLOWED_HOSTS = []
-#https://food--delivery.herokuapp.com/
+ALLOWED_HOSTS = [
+    'https://food--delivery.herokuapp.com/',
+]
+
 
 
 # Application definition
