@@ -160,7 +160,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# Letting django know about our custome user model
+# Letting django know about our custom user model
 AUTH_USER_MODEL = 'API.CustomUser'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # Using email as user identifier instead of username
@@ -179,6 +179,12 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 # Automatically logout users on password reset
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+
+
+# To be able to retrieve user details from our custom user model and serializer
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'API.serializers.CustomUserDetailsSerializer',
+}
 
 
 
