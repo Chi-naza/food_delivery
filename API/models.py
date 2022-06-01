@@ -1,5 +1,7 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import datetime
 
 
 GENDER_SELECTION = [
@@ -8,15 +10,50 @@ GENDER_SELECTION = [
     ('NS', 'Not Specified'),
 ]
 
+FOOD_TYPE = [
+    ('P', 'Popular'),
+    ('R', 'Recommended'),
+]
+
 
 class CustomUser(AbstractUser):
     # We don't need to define the email attribute because is inherited from AbstractUser
     gender = models.CharField(max_length=20, choices=GENDER_SELECTION, default='Male')
     phone_number = models.CharField(max_length=20)
     
+
+
+class Food_Type(models.Model):
+    type = models.CharField(max_length=20, choices=FOOD_TYPE)
+    description =  models.CharField(max_length=220)
     
+    def __str__(self) -> str:
+        return self.type
     
+
+
+class Food(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    location = models.CharField(max_length=220) 
+    stars = models.CharField(max_length=10)
+    description = models.TextField()
+    quantity = models.IntegerField()
+    people = models.IntegerField()
+    selected = models.IntegerField()
+    img = models.ImageField(upload_to='food_image')
+    food_type = models.ForeignKey(Food_Type, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self) -> str:
+        return self.name
+
+
+    
+
+
+
     
 
 
