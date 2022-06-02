@@ -49,9 +49,10 @@ class Food(models.Model):
         return self.name
 
 
-    
+# food = {}
+# Food = []    
 
-
+# p = Food(name = food['name'], price = food['price'], location = food['location'], stars = food['stars'], description = food['description'], quantity = food['quantity'], people = food['people'], selected = food['selected'], img = food['img'], food_type = food['food_type'], created_at = food['created_at'], updated_at = food['updated_at'])
 
     
 
