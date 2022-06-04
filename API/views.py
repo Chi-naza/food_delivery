@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from API.models import Food, Product
+from API.models import Food, Products
 from API.serializers import FoodSerializer, ProductSerializer
 from rest_framework import generics
 
@@ -16,11 +16,11 @@ class PopularFoodListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_queryset(self):
-        return Product.objects.filter(products__food_type__type = 'P')
+        return Products.objects.filter(products__food_type__type = 'P')
     
     
 class RecommendedFoodListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_queryset(self):
-        return Product.objects.filter(products__food_type__type= 'R')
+        return Products.objects.filter(products__food_type__type= 'R')

@@ -2,7 +2,7 @@ from dataclasses import field
 from rest_framework import serializers
 from django.db import transaction
 from dj_rest_auth.registration.serializers import RegisterSerializer
-from API.models import CustomUser, Food, Product
+from API.models import CustomUser, Food, Products
 
 
 # customUser serializer overidding the one dj-rest-auth
@@ -41,6 +41,6 @@ class FoodSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
-        fields = ['total_size', 'products']
+        model = Products
+        fields = ['quantity_ordered', 'products']
         depth = 1

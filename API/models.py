@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -47,10 +48,20 @@ class Food(models.Model):
     
     def __str__(self):
         return self.name
+    
+    
 
-class Product(models.Model):
+class Products(models.Model):
     quantity_ordered = models.IntegerField(default=0)
     products = models.OneToOneField(Food, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.products.name
+    
+    class Meta:
+        verbose_name_plural = 'Products'
+        
+
       
 
 # p = Food(name = food['name'], price = food['price'], location = food['location'], stars = food['stars'], description = food['description'], quantity = food['quantity'], people = food['people'], selected = food['selected'], img = food['img'], food_type = food['food_type'], created_at = food['created_at'], updated_at = food['updated_at'])
