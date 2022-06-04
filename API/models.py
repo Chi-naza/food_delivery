@@ -49,8 +49,8 @@ class Food(models.Model):
         return self.name
 
 class Product(models.Model):
-    quantity_Ordered = models.IntegerField(default=0)
-    products = models.ForeignKey(Food, on_delete=models.CASCADE)
+    quantity_ordered = models.IntegerField(default=0)
+    products = models.OneToOneField(Food, on_delete=models.CASCADE)
       
 
 # p = Food(name = food['name'], price = food['price'], location = food['location'], stars = food['stars'], description = food['description'], quantity = food['quantity'], people = food['people'], selected = food['selected'], img = food['img'], food_type = food['food_type'], created_at = food['created_at'], updated_at = food['updated_at'])
