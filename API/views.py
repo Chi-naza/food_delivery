@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from API.models import Food
-from API.serializers import FoodSerializer
+from API.models import Food, Product
+from API.serializers import FoodSerializer, ProductSerializer
 from rest_framework import generics
+
 
 # Create your views here.
 
@@ -12,14 +13,14 @@ def Home(request):
 
 
 class PopularFoodListView(generics.ListAPIView):
-    serializer_class = FoodSerializer
+    serializer_class = ProductSerializer
     
     def get_queryset(self):
-        return Food.objects.filter(food_type__type = 'P')
+        return Product.objects.filter(products__food_type__type = 'P')
     
     
 class RecommendedFoodListView(generics.ListAPIView):
-    serializer_class = FoodSerializer
+    serializer_class = ProductSerializer
     
     def get_queryset(self):
-        return Food.objects.filter(food_type__type = 'R')
+        return Product.objects.filter(products__food_type__type= 'R')

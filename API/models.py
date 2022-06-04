@@ -26,7 +26,7 @@ class Food_Type(models.Model):
     type = models.CharField(max_length=20, choices=FOOD_TYPE)
     description =  models.CharField(max_length=220)
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.type
     
 
@@ -45,12 +45,13 @@ class Food(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
-
-# food = {}
-# Food = []    
+class Product(models.Model):
+    quantity_Ordered = models.IntegerField(default=0)
+    products = models.ForeignKey(Food, on_delete=models.CASCADE)
+      
 
 # p = Food(name = food['name'], price = food['price'], location = food['location'], stars = food['stars'], description = food['description'], quantity = food['quantity'], people = food['people'], selected = food['selected'], img = food['img'], food_type = food['food_type'], created_at = food['created_at'], updated_at = food['updated_at'])
 
