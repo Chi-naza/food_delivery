@@ -2,6 +2,7 @@ from django.shortcuts import render
 from API.models import Food, Products
 from API.serializers import FoodSerializer, ProductSerializer
 from rest_framework import generics
+from rest_framework import generics
 
 
 # Create your views here.
