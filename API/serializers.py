@@ -2,7 +2,7 @@ from dataclasses import field
 from rest_framework import serializers
 from django.db import transaction
 from dj_rest_auth.registration.serializers import RegisterSerializer
-from API.models import CustomUser, Food, Products
+from API.models import CustomUser, Food, Products, Food_Type
 
 
 # customUser serializer overidding the one dj-rest-auth
@@ -35,7 +35,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = ['pk', 'name', 'description', 'price', 'stars', 'img', 'location', 'created_at', 'updated_at', 'food_type']
+        fields = ['pk', 'name', 'description', 'price', 'stars', 'img', 'location', 'created_at', 'updated_at']
         # depth = 1  (this ppty is to enable json to nest down to a lower depth incase of foreign keys)
 
 
@@ -44,3 +44,10 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Products
         fields = ['quantity_ordered', 'products']
         depth = 1
+        
+        
+class FoodTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food_Type
+        fields = ['type', 'description']
+        
