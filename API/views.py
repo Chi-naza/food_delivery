@@ -9,7 +9,7 @@ from rest_framework import generics
 
 
 def Home(request):
-    return render(request, 'API/home.html')
+    return render(request, 'API/home.html', {"foods" : Food.objects.all()})
     
 
 

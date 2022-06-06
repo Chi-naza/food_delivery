@@ -38,6 +38,13 @@
             font-weight: bold;
             padding-left:1rem;
         }
+
+        {% comment %} .img-div{
+            height:50px;
+            width: 50px;
+            display: flex;
+            flex-direction: horizontal;
+        } {% endcomment %}
     </style>
 </head>
 
@@ -49,6 +56,13 @@
             <h1>Food Delivery</h1>
         </div>
     </div>
+
+    {% comment %} {% for food in foods %}
+       <div class="img-div">           
+           <img id = "blog-img" src = "{{ food.img.url }}"/>
+       </div>
+
+    {% endfor %} {% endcomment %}
 
     <footer>© All Rights Reserved. Nazzy World Inc.<footer>
 </body>
