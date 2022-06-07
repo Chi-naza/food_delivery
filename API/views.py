@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from API.models import Food, Products, Food_Type
-from API.serializers import FoodSerializer, ProductSerializer, FoodTypeSerializer
+from API.serializers import FoodSerializer, ProductSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,50 +14,37 @@ def Home(request):
     return render(request, 'API/home.html', {"foods" : Food.objects.all()})
     
     
-    
-    
-    
-    
+# For Products Model   
 
-class PopularFoodListView(generics.ListAPIView):
+class PopularProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_queryset(self):
         return Products.objects.filter(products__food_type__type = 'P')
     
     
-class RecommendedFoodListView(generics.ListAPIView):
+class RecommendedProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_queryset(self):
         return Products.objects.filter(products__food_type__type= 'R')
+  
+  
+  
     
-    
-    
-class FoodListView(generics.ListAPIView):
+# For Food Model 
+   
+class PopularFoodListView(generics.ListAPIView):
     serializer_class = FoodSerializer
     
     def get_queryset(self):
-        return Food.objects.all()
+        return Food.objects.filter(food_type__type = 'P')
     
-class FoodTypeListView(generics.ListAPIView):
-    serializer_class = FoodTypeSerializer
+    
+class RecommendedFoodListView(generics.ListAPIView):
+    serializer_class = FoodSerializer
     
     def get_queryset(self):
-        return Food_Type.objects.all()
+        return Food.objects.filter(food_type__type = 'R')
     
     
-
-
-# class PopularFoodListView(generics.AP):
-#     serializer_class = ProductSerializer
-    
-#     def get_queryset(self):
-#         return Products.objects.filter(products__food_type__type = 'P')
-    
-    
-# class RecommendedFoodListView(generics.ListAPIView):
-#     serializer_class = ProductSerializer
-    
-#     def get_queryset(self):
-#         return Products.objects.filter(products__food_type__type= 'R')

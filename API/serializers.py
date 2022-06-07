@@ -35,7 +35,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = ['pk', 'name', 'description', 'price', 'stars', 'img', 'location', 'created_at', 'updated_at']
+        fields = ['pk', 'name', 'description', 'price', 'stars', 'img', 'location', 'created_at', 'updated_at', 'food_type']
         # depth = 1  (this ppty is to enable json to nest down to a lower depth incase of foreign keys)
 
 
@@ -46,8 +46,4 @@ class ProductSerializer(serializers.ModelSerializer):
         depth = 1
         
         
-class FoodTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Food_Type
-        fields = ['type', 'description']
         
