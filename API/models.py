@@ -34,7 +34,7 @@ class Food_Type(models.Model):
 
 class Food(models.Model):
     name = models.CharField(max_length=50)
-    price = models.DecimalField(decimal_places=2, max_digits=10)
+    price = models.IntegerField()
     location = models.CharField(max_length=220) 
     stars = models.CharField(max_length=10)
     description = models.TextField()
