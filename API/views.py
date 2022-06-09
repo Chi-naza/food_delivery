@@ -4,6 +4,7 @@ from API.serializers import FoodSerializer, ProductSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -46,5 +47,4 @@ class RecommendedFoodListView(generics.ListAPIView):
     
     def get_queryset(self):
         return Food.objects.filter(food_type__type = 'R')
-    
     
