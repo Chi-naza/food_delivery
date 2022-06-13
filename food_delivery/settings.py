@@ -193,17 +193,19 @@ REST_AUTH_SERIALIZERS = {
 }
 
 
-# Enabling token authentication.
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES' : [
-#         'rest_framework.authentication.TokenAuthentication',
-#     ]
-# }
+# Enabling token authentication. For user Details
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 
 
 #HEROKU SECTION
 django_heroku.settings(locals()) # Automatic configuration with django_heroku
+
+
 
 
 # For JSON Rendering of the API powered by the rest_framework
