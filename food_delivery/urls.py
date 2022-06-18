@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# r is the raw string literal
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('API.urls')),

@@ -1,5 +1,5 @@
 from django.urls import path
-from API.views import Home, PopularFoodListView, RecommendedFoodListView, PopularProductListView, RecommendedProductListView
+from API.views import Home, PopularFoodListView, RecommendedFoodListView, PopularProductListView, RecommendedProductListView, google_geocode_api
 
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('api/foods/recommended_foods/', RecommendedFoodListView.as_view(), name='recommended_foods'),
     path('api/products/popular/', PopularProductListView.as_view()),
     path('api/products/recommended/', RecommendedProductListView.as_view()),
+    path('api/geocode/<str:lat>/<str:long>/', google_geocode_api),
 ]
