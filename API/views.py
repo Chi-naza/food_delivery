@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from API.models import Food, Products
-from API.serializers import FoodSerializer, ProductSerializer
+from API.models import Food, Address, CustomUser
+from API.serializers import FoodSerializer, AddressSerializer
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 # Google api view
 import requests
 import time
@@ -18,31 +19,16 @@ print(KEY)
 
 
 
-# Create your views here.
+# For Home View or Page.
 
 def Home(request):
     return render(request, 'API/home.html', {"foods" : Food.objects.all()})
     
-    
-# For Products Model   
-
-class PopularProductListView(generics.ListAPIView):
-    serializer_class = ProductSerializer
-    
-    def get_queryset(self):
-        return Products.objects.filter(products__food_type__type = 'P')
-    
-    
-class RecommendedProductListView(generics.ListAPIView):
-    serializer_class = ProductSerializer
-    
-    def get_queryset(self):
-        return Products.objects.filter(products__food_type__type= 'R')
-  
+      
   
   
     
-# For Food Model 
+# For Food Model. API getting list of food items
    
 class PopularFoodListView(generics.ListAPIView):
     serializer_class = FoodSerializer
@@ -60,6 +46,7 @@ class RecommendedFoodListView(generics.ListAPIView):
     
     
 # For Google Map Api. Making a call to an external api & Rendering it through djangorestframework
+
 @api_view(('GET',))
 def google_geocode_api(request, lat, long):
     if request.method == "GET":
@@ -76,3 +63,36 @@ def google_geocode_api(request, lat, long):
     else:
         return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
     
+    
+    
+
+# For User Address Data. API creating or updating user address
+class CreateAndUpdateAddress(generics.ListCreateAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        gotten_user_id =request.data.get("user")
+        myuser = CustomUser.objects.get(id = gotten_user_id)
+        
+        address, created = Address.objects.update_or_create(user=myuser)
+
+        # require context={'request': request} because i'm using HyperlinkModelSerializer
+        serializer = AddressSerializer(address, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+
+        if created:
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status.HTTP_200_OK)
+        
+        
+    
+# API view that gets user address      
+class AddressListView(generics.ListAPIView):
+    serializer_class = AddressSerializer
+    
+    def get_queryset(self):
+        return Address.objects.all()

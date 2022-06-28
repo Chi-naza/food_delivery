@@ -61,6 +61,23 @@ class Products(models.Model):
     class Meta:
         verbose_name_plural = 'Products'
         
+        
+
+
+
+class Address(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.CharField(max_length=300)
+    address_type = models.CharField(max_length=10)
+    latitude = models.CharField(max_length=100)
+    longitude = models.CharField(max_length=100)
+    contact_person_name = models.CharField(max_length=50)
+    contact_person_number = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.user.username}'s Address & Location"
 
       
 
