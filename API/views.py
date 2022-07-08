@@ -96,3 +96,25 @@ class AddressListView(generics.ListAPIView):
     
     def get_queryset(self):
         return Address.objects.all()
+
+
+
+
+
+# API for for 'SEARCH_ADDRESS_URI': google places api autocomplete 
+@api_view(('GET',))
+def google_places_api(request, text):
+    if request.method == "GET":
+        attempt_num = 0  # keep track of how many times we've retried
+        while attempt_num < TRIALS:
+            response = requests.get(f"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={text}&key={KEY}", timeout=10)
+           
+            if response.status_code == 200:
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                attempt_num += 1
+                time.sleep(5)  # Wait for 5 seconds before re-trying
+        return Response({"error": "Request failed"}, status=response.status_code)
+    else:
+        return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)

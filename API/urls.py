@@ -1,5 +1,5 @@
 from django.urls import path
-from API.views import Home, PopularFoodListView, RecommendedFoodListView, google_geocode_api, CreateAndUpdateAddress, AddressListView
+from API.views import Home, PopularFoodListView, RecommendedFoodListView, google_geocode_api, CreateAndUpdateAddress, AddressListView, google_places_api
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/geocode/<str:lat>/<str:long>/', google_geocode_api),
     path('api/create/update/user_address/', CreateAndUpdateAddress.as_view()),
     path('api/get/user_address/', AddressListView.as_view()),
+    path('api/places/autocomplete/<str:text>/', google_places_api),
 ]
