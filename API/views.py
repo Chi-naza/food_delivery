@@ -118,3 +118,28 @@ def google_places_api(request, text):
         return Response({"error": "Request failed"}, status=response.status_code)
     else:
         return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+    
+    
+    
+    
+# API for for 'PLACES_DETAILS_URI': 
+# this will get more info about a place picked by the user as we send over the placeID of that picked location to the Google API
+@api_view(('GET',))
+def google_place_details_api(request, place_id):
+    if request.method == "GET":
+        attempt_num = 0  # keep track of how many times we've retried
+        while attempt_num < TRIALS:
+            response = requests.get(f"https://maps.googleapis.com/maps/api/place/details/json?placeid={place_id}&key={KEY}", timeout=10)
+           
+            if response.status_code == 200:
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                attempt_num += 1
+                time.sleep(5)  # Wait for 5 seconds before re-trying
+        return Response({"error": "Request failed"}, status=response.status_code)
+    else:
+        return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
