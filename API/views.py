@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from API.models import Food, Address, CustomUser
 from API.serializers import FoodSerializer, AddressSerializer
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 # Google api view
 import requests
@@ -11,10 +12,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import os
 
+
+
 TRIALS = 3 # No. of times the api call will be tried. For google map api
 
 KEY = os.getenv('GOOGLE_API_KEY')
-print(KEY)
+#print(KEY) // for testing
 
 
 
@@ -90,13 +93,13 @@ class CreateAndUpdateAddress(generics.ListCreateAPIView):
         
         
     
-# API view that gets user address      
-class AddressListView(generics.ListAPIView):
-    serializer_class = AddressSerializer
-    
-    def get_queryset(self):
-        return Address.objects.all()
+# API view that gets specific user address.   
 
+class UserAddressData(APIView):
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, pk=kwargs['user_id'])
+        address_serializer = AddressSerializer(user.address)
+        return Response(address_serializer.data)
 
 
 
@@ -143,3 +146,8 @@ def google_place_details_api(request, place_id):
         return Response({"error": "Request failed"}, status=response.status_code)
     else:
         return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+
+

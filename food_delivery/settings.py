@@ -54,13 +54,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'food_delivery_web',
     # Accessing django_allauth for standard reg
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    # 'rest_framework_json_api',
+    # payment
+    'paypal.standard.ipn', # ipn = Instant Payment Notification
 ]
 
 MIDDLEWARE = [
@@ -86,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'food_delivery_web.context_processor.cart_item_count', # a custom context_processor
             ],
         },
     },
@@ -207,37 +210,13 @@ django_heroku.settings(locals()) # Automatic configuration with django_heroku
 
 
 
+# Payment: paypal
+PAYPAL_RECEIVER_EMAIL = os.getenv('PAYPAL_RECEIVER_EMAIL')
 
-# For JSON Rendering of the API powered by the rest_framework
+PAYPAL_TEST = os.getenv('PAYPAL_TEST') 
 
-# REST_FRAMEWORK = {
-#     'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
-#     'DEFAULT_PAGINATION_CLASS':
-#         'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
-#     'DEFAULT_PARSER_CLASSES': (
-#         'rest_framework_json_api.parsers.JSONParser',
-#         'rest_framework.parsers.FormParser',
-#         'rest_framework.parsers.MultiPartParser'
-#     ),
-#     'DEFAULT_RENDERER_CLASSES': (
-#         'rest_framework_json_api.renderers.JSONRenderer',
-#         # If you're performance testing, you will want to use the browseable API
-#         # without forms, as the forms can generate their own queries.
-#         # If performance testing, enable:
-#         # 'example.utils.BrowsableAPIRendererWithoutForms',
-#         # Otherwise, to play around with the browseable API, enable:
-#         'rest_framework.renderers.BrowsableAPIRenderer'
-#     ),
-#     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
-#     'DEFAULT_FILTER_BACKENDS': (
-#         'rest_framework_json_api.filters.QueryParameterValidationFilter',
-#         'rest_framework_json_api.filters.OrderingFilter',
-#         'rest_framework_json_api.django_filters.DjangoFilterBackend',
-#         'rest_framework.filters.SearchFilter',
-#     ),
-#     'SEARCH_PARAM': 'filter[search]',
-#     'TEST_REQUEST_RENDERER_CLASSES': (
-#         'rest_framework_json_api.renderers.JSONRenderer',
-#     ),
-#     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
-# }
+
+
+
+
+

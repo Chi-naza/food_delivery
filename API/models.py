@@ -42,6 +42,7 @@ class Food(models.Model):
     people = models.IntegerField()
     selected = models.IntegerField()
     img = models.ImageField(upload_to='food_image')
+    slug = models.SlugField(max_length=200, blank=True)
     food_type = models.ForeignKey(Food_Type, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

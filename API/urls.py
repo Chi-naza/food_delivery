@@ -6,7 +6,7 @@ from API.views import (
     RecommendedFoodListView, 
     google_geocode_api, 
     CreateAndUpdateAddress, 
-    AddressListView, 
+    UserAddressData, 
     google_places_api,
     google_place_details_api
 )
@@ -19,7 +19,7 @@ urlpatterns = [
     path('api/foods/recommended_foods/', RecommendedFoodListView.as_view(), name='recommended_foods'),
     path('api/geocode/<str:lat>/<str:long>/', google_geocode_api),
     path('api/create/update/user_address/', CreateAndUpdateAddress.as_view()),
-    path('api/get/user_address/', AddressListView.as_view()),
+    path('api/get/user_address/<int:user_id>/', UserAddressData.as_view()),
     path('api/places/autocomplete/<str:text>/', google_places_api),
     path('api/place/details/<str:place_id>/', google_place_details_api),
 ]
