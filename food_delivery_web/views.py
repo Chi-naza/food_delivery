@@ -136,6 +136,10 @@ def process_payment(request):
 def mobile_process_payment(request, order_ID):
 
     order = get_object_or_404(Order, order_ID=order_ID)
+    print(f'TOTAL COST - {order.total_cost()}')
+    print(f'ORDER_ID FROM SESSION - {order_ID}')
+    print(f'ORDER FK ID - {order.id}')
+    print(f'TOTAL COST - {order.total_cost()}')
 
     # What you want the button to do.
     paypal_dict = {

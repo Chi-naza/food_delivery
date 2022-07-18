@@ -3,7 +3,6 @@ from API.models import Food, Address, CustomUser
 from API.serializers import FoodSerializer, AddressSerializer, OrderSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
-from food_delivery_web.models import Order
 # Google api view
 import requests
 import time
@@ -11,6 +10,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import os
+# Order
+from food_delivery_web.models import Order, LineItem
+from food_delivery_web import cart
 
 
 
@@ -158,7 +160,43 @@ class MakeAnOrder(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     
     def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+        user_id = CustomUser.objects.get(id=request.data.get('user'))
+        # cart_list = request.objects.get('cart')
+        
+        order = Order.objects.create(
+            user = user_id,
+            order_ID  = cart.generate_order_id(),
+            order_note = request.data.get('order_note'),
+            address = request.data.get('address'),
+            order_amount = request.data.get('order_amount')
+        )
+        
+        print(f'USER ID - {order.user}')
+        print(f'ORDER ID - {order.order_ID}')
+        
+        
+        # for cart_item in cart_list:
+        #     li = LineItem(
+        #         product_id = cart_item.product_id,
+        #         price = cart_item.price,
+        #         quantity = cart_item.quantity,
+        #         order_id = order.id
+        #     )
+
+        #     li.save()
+        
+        message = 'order made successfully'
+        
+        
+        serializer = OrderSerializer(order, data=request.data, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+        
+        if order: #and li:
+            return Response({'order_ID': order.order_ID, 'message':message}, status.HTTP_201_CREATED)
+        else:
+            return Response({'error':'Order failed'}, status.HTTP_400_BAD_REQUEST)
+
     
     
     
