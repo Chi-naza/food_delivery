@@ -102,26 +102,6 @@ def checkout(request):
     
     
 #///////////////////////////////////// PAYMENT WITH PAYPAL //////////////////////////////////////////////////////////#
-    
-# def process_payment(request):
-#     order_id = request.session.get('order_id')
-#     order = get_object_or_404(Order, id=order_id)
-
-#     paypal_dict = {
-#         'business': os.getenv('PAYPAL_RECEIVER_EMAIL'),
-#         'amount': '%.2f' % order.total_cost().quantize(Decimal('.01')),
-#         'item_name': 'Order {}'.format(order.id),
-#         'invoice': str(order.id),
-#         'currency_code': 'USD',
-#         'notify_url': request.build_absolute_uri(reverse('paypal-ipn')),
-#         'return_url': request.build_absolute_uri(reverse('payment_done')),
-#         'cancel_return': request.build_absolute_uri(reverse('payment_cancelled')),
-#     }
-
-#     form = PayPalPaymentsForm(initial=paypal_dict)
-#     return render(request, 'food_delivery_web/process_payment.html', {'order': order, 'form': form})
-
-
 
 def process_payment(request):
     order_id = request.session.get('order_ID')
@@ -139,6 +119,30 @@ def process_payment(request):
         "amount": '%.2f' % order.total_cost().quantize(Decimal('.01')),
         "item_name": 'Order {}'.format(order.order_ID),
         "invoice": str(order.order_ID),
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('payment_done')),
+        "cancel_return": request.build_absolute_uri(reverse('payment_cancelled')),
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    context = {"form": form}
+    return render(request, 'food_delivery_web/process_payment.html', context)
+
+
+
+
+# Process Payment For Mobile
+def mobile_process_payment(request, order_ID):
+
+    order = get_object_or_404(Order, order_ID=order_ID)
+
+    # What you want the button to do.
+    paypal_dict = {
+        "business": os.getenv('PAYPAL_RECEIVER_EMAIL'),
+        "amount": '%.2f' % order.total_cost().quantize(Decimal('.01')),
+        "item_name": order_ID,
+        "invoice": order_ID,
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
         "return": request.build_absolute_uri(reverse('payment_done')),
         "cancel_return": request.build_absolute_uri(reverse('payment_cancelled')),

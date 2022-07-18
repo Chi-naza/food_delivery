@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from API.models import Food, Address, CustomUser
-from API.serializers import FoodSerializer, AddressSerializer
+from API.serializers import FoodSerializer, AddressSerializer, OrderSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from food_delivery_web.models import Order
 # Google api view
 import requests
 import time
@@ -11,6 +11,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import os
+
+
 
 
 
@@ -146,6 +148,18 @@ def google_place_details_api(request, place_id):
         return Response({"error": "Request failed"}, status=response.status_code)
     else:
         return Response({"error": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+
+# API for making a POST request. Ordering food
+class MakeAnOrder(generics.ListCreateAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
+    
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    
     
     
     

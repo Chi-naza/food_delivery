@@ -26,8 +26,8 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
-    order_ID = models.CharField(max_length=30, default='hequ372387283uewhdhwhj2djw2')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    order_ID = models.CharField(max_length=30)
     address = models.CharField(max_length=191, blank=True)
     paid = models.BooleanField(default=False)
     payment_status = models.CharField(max_length=20, default='pending')
@@ -42,7 +42,7 @@ class Order(models.Model):
     # handover = models.DateTimeField(blank=True)
     # failed = models.DateTimeField(blank=True)
     # scheduled_at = models.DateTimeField(blank=True)
-    order_note = models.CharField(max_length=350, blank=True)
+    order_note = models.CharField(max_length=350)
     delivery_charge = models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
     delivery_address = models.CharField(max_length=220, blank=True)
     otp = models.CharField(max_length=20, blank=True)

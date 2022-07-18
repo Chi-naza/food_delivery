@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.db import transaction
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from API.models import CustomUser, Food, Address
+from food_delivery_web.models import Order
 
 
 # customUser serializer overidding the one dj-rest-auth
@@ -44,6 +45,12 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['user', 'address', 'address_type', 'longitude', 'latitude', 'contact_person_name', 'contact_person_number']
+        
+        
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['user', 'address', 'order_note', 'order_amount']
 
 
         
