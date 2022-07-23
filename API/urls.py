@@ -9,7 +9,8 @@ from API.views import (
     UserAddressData, 
     google_places_api,
     google_place_details_api,
-    MakeAnOrder
+    MakeAnOrder,
+    UserOrderDetails
 )
 
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('api/places/autocomplete/<str:text>/', google_places_api),
     path('api/place/details/<str:place_id>/', google_place_details_api),
     path('api/checkout/make_an_order/', MakeAnOrder.as_view()),
+    path('api/user/order_details/<int:user_id>/', UserOrderDetails.as_view()),
 ]

@@ -74,6 +74,9 @@ def checkout(request):
             all_items = cart.get_all_cart_items(request)
             for cart_item in all_items:
                 li = LineItem(
+                    user = o.user,
+                    name = cart_item.product.name,
+                    ordersID = o.order_ID,
                     product_id = cart_item.product_id,
                     price = cart_item.price,
                     quantity = cart_item.quantity,

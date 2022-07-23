@@ -64,7 +64,11 @@ class Order(models.Model):
 class LineItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Food, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     price = models.DecimalField(max_digits=7, decimal_places=2)
+    name = models.CharField(max_length=30, default='Abacha')
+    ordersID = models.CharField(max_length=30, default='nnbxcjhs2524jhsbv')
+    order_status = models.CharField(max_length=10, default='pending')
     quantity = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 

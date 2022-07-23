@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from API.models import Food, Address, CustomUser
-from API.serializers import FoodSerializer, AddressSerializer, OrderSerializer
+from API.serializers import FoodSerializer, AddressSerializer, OrderSerializer, OrderDetailsSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 # Google api view
@@ -177,6 +177,9 @@ class MakeAnOrder(generics.ListCreateAPIView):
         
         # for cart_item in cart_list:
         #     li = LineItem(
+        #         user = order.user,
+        #         name = cart_item.product.name,
+        #         ordersID = order.order_ID,
         #         product_id = cart_item.product_id,
         #         price = cart_item.price,
         #         quantity = cart_item.quantity,
@@ -196,6 +199,20 @@ class MakeAnOrder(generics.ListCreateAPIView):
             return Response({'order_ID': order.order_ID, 'message':message}, status.HTTP_201_CREATED)
         else:
             return Response({'error':'Order failed'}, status.HTTP_400_BAD_REQUEST)
+        
+        
+        
+        
+# API for getting specific orders of a particular user
+class UserOrderDetails(generics.ListAPIView):
+    serializer_class = OrderDetailsSerializer
+    
+    def get_queryset(self):
+        user_id = get_object_or_404(CustomUser, pk= self.kwargs['user_id']) 
+             
+        return LineItem.objects.filter(user = user_id)
+
+
 
     
     
