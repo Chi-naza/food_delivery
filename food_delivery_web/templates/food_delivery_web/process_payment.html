@@ -1,8 +1,40 @@
-{% extends 'food_delivery_web/base.html' %}
+<!DOCTYPE html>
 
-{% block title %}Make Payment{% endblock %}
+<html>
+    <head>
 
-{% block content %}
-    <h2>Pay with PayPal</h2>
-    {{ form.render }}
-{% endblock %}
+        <title>Pay With PayPal</title>
+
+        <style>
+            #body{
+                border:4px solid grey;
+                width: 30%;
+                margin: 45vh auto;
+                background: whitesmoke;
+            }
+            #insider{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10%;
+            }
+        </style>
+    </head>
+
+    
+
+    <body>
+        <div id="body">
+            <div id="insider">
+                <div>
+                    <h1>Pay with PayPal</h1>
+                </div>
+                <div>
+                    {{ form.render }}
+                </div>
+                
+                
+            </div>
+        </div>
+    </body>
+</html>
